@@ -1,4 +1,11 @@
-### Hi there 👋
+### Hey, I'm Jonathan 👋
+
+I'm a [Dev Degree](www.devdegree.ca) intern @Shopify. I previously worked on building the [Shopify Fulfillment Network](https://www.shopify.com/fulfillment) as a fullstack developer. I am currently working on the Experimentation Platform at Shopify as a data developer.
+
+### Get in touch! 🌎
+- Personal site: https://jonathangin.me/
+- LinkedIn: https://www.linkedin.com/in/jonathangin/
+- Twitter: https://twitter.com/jonathangin52
 
 <!--
 **JonathanGin52/JonathanGin52** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
