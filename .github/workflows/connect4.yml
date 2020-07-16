@@ -25,7 +25,9 @@ jobs:
         gem install octokit -N --silent
     
     - name: Test
-      run: tree -L 3
+      run: |
+        sudo apt-get install tree
+        tree -L 4
 
     - name: Play
       run: |
