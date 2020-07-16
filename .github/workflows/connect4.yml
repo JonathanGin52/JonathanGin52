@@ -31,13 +31,11 @@ jobs:
       run: |
         pwd
         ls
-        ls ..
-        ls ../..
 
     - name: Play
       run: |
         ruby <<- EORUBY
-          require_relative File.expand_path('../connect4/runner.rb', __FILE__)
+          require './connect4/runner'
           
           runner = Connect4::Runner.new(
             github_token: "${{ secrets.GITHUB_TOKEN }}",
