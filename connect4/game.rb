@@ -13,18 +13,16 @@ require_relative './invalid_move_error'
 
 module Connect4
   class Game
-    attr_reader :history, :turn
+    attr_reader :turn
 
     def initialize(
       player1_board: 0,
       player2_board: 0,
       peaks: [0, 7, 14, 21, 28, 35, 42],
-      history: [],
       turn: 0
     )
       @bitboards = [player1_board, player2_board]
       @peaks = peaks
-      @history = history
       @turn = turn
     end
 
@@ -78,7 +76,6 @@ module Connect4
       move = 1 << @peaks[column]
       @peaks[column] += 1
       @bitboards[@turn & 1] ^= move
-      history[@turn] = column
       @turn += 1
     end
 
@@ -95,7 +92,6 @@ module Connect4
         player1_board: @bitboards[0],
         player2_board: @bitboards[1],
         peaks: @peaks,
-        history: history,
         turn: turn,
       }.to_yaml
     end
