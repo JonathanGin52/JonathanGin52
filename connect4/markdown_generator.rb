@@ -2,11 +2,10 @@ class MarkdownGenerator
   IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
   ISSUE_BASE_URL = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
 
-  def initialize(game:, issue_title:, octokit:, user:)
+  def initialize(game:, issue_title:, octokit:)
     @game = game
     @issue_title = issue_title
     @octokit = octokit
-    @user = user
   end
 
   def generate
@@ -71,11 +70,6 @@ class MarkdownGenerator
         | ---- | ---- | ------- |
     HTML
 
-    unless issue_title.start_with?('connect4|new')
-      *, team, move = issue_title.split('|')
-      markdown.concat("| #{team.capitalize} | #{move} | [@#{user}](https://github.com/#{user}) |\n")
-    end
-
     if octokit.issues.nil?
       markdown.concat "| Oh no... | ¯\\_(ツ)_/¯ | History temporarily unavailable. |\n"
     else
@@ -95,5 +89,5 @@ class MarkdownGenerator
 
   private
 
-  attr_reader :game, :octokit, :issue_title, :user
+  attr_reader :game, :octokit, :issue_title
 end

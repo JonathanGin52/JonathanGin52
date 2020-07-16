@@ -87,7 +87,6 @@ module Connect4
         game: game,
         issue_title: @issue_title,
         octokit: octokit,
-        user: @user,
       ).generate
     end
 
