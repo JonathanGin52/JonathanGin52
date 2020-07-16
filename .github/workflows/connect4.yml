@@ -1,4 +1,4 @@
-name: "Connect-4"
+name: "Connect4"
 
 on:
   issues:
@@ -7,7 +7,7 @@ on:
 jobs:
   move:
     runs-on: ubuntu-latest
-    if: startsWith(github.event.issue.title, 'connect-4|')
+    if: startsWith(github.event.issue.title, 'connect4|')
     steps:
 
     - name: Set env vars
