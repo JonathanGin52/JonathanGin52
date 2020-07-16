@@ -27,7 +27,8 @@ jobs:
     - name: Play
       run: |
         ruby <<- EORUBY
-          require_relative File.expand_path('../connect4/runner.rb', __FILE__)
+          $LOAD_PATH << '.'
+          require_relative '../connect4/runner'
           
           runner = Connect4::Runner.new(
             github_token: "${{ secrets.GITHUB_TOKEN }}",
