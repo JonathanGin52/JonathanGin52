@@ -6,7 +6,7 @@ require_relative './game'
 module Connect4
   class MalformedCommandError < StandardError;end
   class Runner
-    IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/connect-4/images'
+    IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
     MARKDOWN_PATH = 'connect4.md'
 
