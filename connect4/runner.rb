@@ -68,7 +68,7 @@ module Connect4
     def write
       *, command, team, move = @issue_title.split('|')
       message = if command == 'drop'
-        "@#{@user} dropped a #{team} in column #{move}"
+        "@#{@user} dropped a #{team} disc in column #{move}"
       else
         "@#{@user} started a new game!"
       end

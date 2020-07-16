@@ -25,14 +25,12 @@ class MarkdownGenerator
     HTML
 
     game_status = if game.over?
-      <<~HTML
-        Game over! #{game.status_string} [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)
-      HTML
+      "Game over! #{game.status_string} [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)"
     else
       "It is the **#{current_turn}** team's turn to play."
     end
 
-    markdown.concat(game_status)
+    markdown.concat("#{game_status}\n")
 
     valid_moves = game.valid_moves
     headers = (1..7).map do |column|
