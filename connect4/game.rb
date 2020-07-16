@@ -37,6 +37,20 @@ module Connect4
       valid_moves.empty? || !winner.nil?
     end
 
+    def status_string
+      if over?
+        if win?(@bitboards[0])
+          'Red team wins!'
+        elsif win?(@bitboards[1])
+          'Blue team wins!'
+        else
+          'The game was a draw!'
+        end
+      else
+        'The game is ongoing'
+      end
+    end
+
     def result
       if winner.nil?
         'Draw'
