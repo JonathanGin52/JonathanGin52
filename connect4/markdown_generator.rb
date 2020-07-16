@@ -22,8 +22,17 @@ class MarkdownGenerator
         ## Join my community Connect Four game!
         Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a piece in.
 
-        It is the **#{current_turn}** team's turn to play.
     HTML
+
+    game_status = if game.over?
+      <<~HTML
+        Game over! #{game.status_string} [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)
+      HTML
+    else
+      "It is the **#{current_turn}** team's turn to play."
+    end
+
+    markdown.concat(game_status)
 
     valid_moves = game.valid_moves
     headers = (1..7).map do |column|
@@ -54,16 +63,7 @@ class MarkdownGenerator
       markdown.concat("|#{format.join('|')}|\n")
     end
 
-    if game.over?
-      markdown.concat <<~HTML
-
-          GAME OVER! #{game.status_string}. [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)
-      HTML
-    end
-
     markdown.concat <<~HTML
-
-        Learn more about how this works: https://github.com/JonathanGin52/JonathanGin52/tree/master/connect4
 
         **Most recent moves**
         | Team | Move | Sent by |
