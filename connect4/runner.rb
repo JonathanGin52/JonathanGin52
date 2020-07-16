@@ -1,24 +1,29 @@
-require_relative './octokit_client'
-require_relative './synchronization_error'
-require_relative './invalid_move_error'
 require_relative './game'
+require_relative './octokit_client'
+require_relative './markdown_generator'
+require_relative './synchronization_error'
+require_relative './malformed_command_error'
+require_relative './invalid_move_error'
 
 module Connect4
-  class MalformedCommandError < StandardError;end
   class Runner
     IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
     MARKDOWN_PATH = 'connect4.md'
 
-    def initialize(github_token:, issue:, repository: 'JonathanGin52/JonathanGin52')
+    def initialize(github_token:, issue_number:, issue_title:, repository:, user:)
       @github_token = github_token
       @repository = repository
-      @issue = issue
+      @issue_number = issue_number
+      @issue_title = issue_title
+      @user = user
     end
 
-    def parse_input(github_issue_title)
-      split_input = github_issue_title.split('|')
+    def run
+      split_input = @issue_title.split('|')
       command = split_input[1]
+
+      acknowledge_issue
 
       if command == 'drop'
         handle_move(player: split_input[2], move: Integer(split_input[3]))
@@ -38,9 +43,11 @@ module Connect4
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     end
 
+    private
+
     def handle_move(player:, move:)
       raise SynchronizationError unless game.current_turn == player
-      game.make_move(move.to_i)
+      game.make_move(move)
     rescue SynchronizationError => e
       comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you"
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
@@ -71,50 +78,24 @@ module Connect4
         sha: raw_markdown_data.sha,
         content: to_markdown,
       )
-      # File.write('./connect4/connect4.yml', game.serialize)
-      # File.write('temp.md', to_markdown)
+      # File.write(GAME_DATA_PATH, game.serialize)
+      # File.write(MARKDOWN_PATH, to_markdown)
     end
 
     def to_markdown
-      markdown = <<~HTML
-        ## Community Connect-4
-      HTML
-
-      valid_moves = game.valid_moves
-      turn = game.current_turn
-      issue_base_url = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
-      headers = (1..7).map do |column|
-        if valid_moves.include?(column)
-          "[#{column}](#{issue_base_url}?title=connect4%7Cdrop%7C#{turn}%7C#{column}&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)"
-        else
-          column.to_s
-        end
-      end
-
-      markdown.concat("|#{headers.join('|')}|\n")
-      markdown.concat("| - | - | - | - | - | - | - |\n")
-
-      red = "![](#{IMAGE_BASE_URL}/red.png)"
-      blue = "![](#{IMAGE_BASE_URL}/blue.png)"
-      blank = "![](#{IMAGE_BASE_URL}/blank.png)"
-
-      game.board.each do |row|
-        format = row.map do |cell|
-          if cell == 'X'
-            red
-          elsif cell == 'O'
-            blue
-          else
-            blank
-          end
-        end
-        markdown.concat("|#{format.join('|')}|\n")
-      end
-
-      markdown
+      MarkdownGenerator.new(
+        game: game,
+        issue_title: @issue_title,
+        octokit: octokit,
+        user: @user,
+      ).generate
     end
 
-    private
+    def acknowledge_issue
+      octokit.add_label(label: 'connect4')
+      octokit.add_reaction(reaction: 'eyes')
+      octokit.close_issue
+    end
 
     def game
       @game ||= Game.load(Base64.decode64(raw_game_data.content))
@@ -129,7 +110,7 @@ module Connect4
     end
 
     def octokit
-      @octokit ||= OctokitClient.new(github_token: @github_token, repository: @repository, issue: @issue)
+      @octokit ||= OctokitClient.new(github_token: @github_token, repository: @repository, issue_number: @issue_number)
     end
   end
 end
