@@ -64,20 +64,20 @@ module Connect4
     end
 
     def write
-      # octokit.write_to_repo(
-      #   filepath: GAME_DATA_PATH,
-      #   message: 'Update game state',
-      #   sha: raw_game_data.sha,
-      #   content: game.serialize
-      # )
-      # octokit.write_to_repo(
-      #   filepath: MARKDOWN_PATH,
-      #   message: 'Update game board',
-      #   sha: raw_markdown_data.sha,
-      #   content: to_markdown,
-      # )
-      File.write(GAME_DATA_PATH, game.serialize)
-      File.write(MARKDOWN_PATH, to_markdown)
+      octokit.write_to_repo(
+        filepath: GAME_DATA_PATH,
+        message: 'Update game state',
+        sha: raw_game_data.sha,
+        content: game.serialize
+      )
+      octokit.write_to_repo(
+        filepath: MARKDOWN_PATH,
+        message: 'Update game board',
+        sha: raw_markdown_data.sha,
+        content: to_markdown,
+      )
+      # File.write(GAME_DATA_PATH, game.serialize)
+      # File.write(MARKDOWN_PATH, to_markdown)
     end
 
     def to_markdown
