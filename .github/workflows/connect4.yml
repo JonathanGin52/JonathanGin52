@@ -23,6 +23,13 @@ jobs:
     - name: Setup Gems
       run: |
         gem install octokit -N --silent
+        
+    - name: Where am I?
+      run: |
+        pwd
+        ls
+        ls ..
+        ls ../..
 
     - name: Play
       run: |
