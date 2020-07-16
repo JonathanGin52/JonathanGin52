@@ -39,7 +39,7 @@ module Connect4
       comment = "There seems to be an error in your input\nError: #{e.message}"
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue MalformedCommandError => e
-      comment = "Your command could not be parsed"
+      comment = "Your command could not be parsed. Make sure you don't edit the issue title."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     end
 
@@ -49,10 +49,10 @@ module Connect4
       raise SynchronizationError unless game.current_turn == player
       game.make_move(move)
     rescue SynchronizationError => e
-      comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you"
+      comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you. Please refresh and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue InvalidMoveError => e
-      comment = "The move you have selected is invalid. Please double check the board and try again"
+      comment = "The move you have selected is invalid. Please double check the board and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     end
 
@@ -60,24 +60,31 @@ module Connect4
       if game.over?
         @game = Game.new
       else
-        comment = "There is current a game still in progress!"
+        comment = "There is currently a game still in progress!"
         octokit.error_notification(reaction: 'confused', comment: comment)
       end
     end
 
     def write
+      *, command, team, move = @issue_title.split('|')
+      message = if command == 'drop'
+        "@#{@user} dropped a #{team} in column #{move}"
+      else
+        "@#{@user} started a new game!"
+      end
       octokit.write_to_repo(
         filepath: GAME_DATA_PATH,
-        message: 'Update game state',
+        message: message,
         sha: raw_game_data.sha,
         content: game.serialize
       )
       octokit.write_to_repo(
         filepath: MARKDOWN_PATH,
-        message: 'Update game board',
+        message: message,
         sha: raw_markdown_data.sha,
         content: to_markdown,
       )
+      octokit.add_reaction(reaction: 'rocket')
       # File.write(GAME_DATA_PATH, game.serialize)
       # File.write(MARKDOWN_PATH, to_markdown)
     end
