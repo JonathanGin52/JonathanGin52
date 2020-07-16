@@ -22,6 +22,10 @@ class OctokitClient
     @octokit.add_comment(@repository, @issue_number, comment)
   end
 
+  def add_label(label:)
+    @octokit.add_comment(@repository, @issue_number, label)
+  end
+
   def close_issue
     @octokit.close_issue(@repository, @issue_number)
   end
