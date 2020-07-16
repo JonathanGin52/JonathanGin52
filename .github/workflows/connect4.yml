@@ -23,16 +23,11 @@ jobs:
     - name: Setup Gems
       run: |
         gem install octokit -N --silent
-    
-    - name: Test
-      run: |
-        sudo apt-get install tree
-        tree .. -L 4
 
     - name: Play
       run: |
         ruby <<- EORUBY
-          require '../connect4/runner'
+          require './connect4/runner'
           
           runner = Connect4::Runner.new(
             github_token: "${{ secrets.GITHUB_TOKEN }}",
