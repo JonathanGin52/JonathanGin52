@@ -27,7 +27,7 @@ jobs:
     - name: Test
       run: |
         sudo apt-get install tree
-        tree -L 4
+        tree .. -L 4
 
     - name: Play
       run: |
