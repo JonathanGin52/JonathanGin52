@@ -27,7 +27,7 @@ jobs:
     - name: Play
       run: |
         ruby <<- EORUBY
-          require File.expand_path('../connect4/runner.rb', __FILE__)
+          require_relative File.expand_path('../connect4/runner.rb', __FILE__)
           
           runner = Connect4::Runner.new(
             github_token: "${{ secrets.GITHUB_TOKEN }}",
@@ -35,3 +35,4 @@ jobs:
             repository: ENV.fetch('REPOSITORY'),
           )
           runner.parse_input('${{ github.event.issue.title }}')
+        EORUBY
