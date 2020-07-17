@@ -50,16 +50,13 @@ module Connect4
       end
     end
 
-    # We can safely memoize here because only 1 move is ever made at a time
     def winner
-      @winner ||= begin
-        if win?(@bitboards[0])
-          RED
-        elsif win?(@bitboards[1])
-          BLUE
-        else
-          nil
-        end
+      if win?(@bitboards[0])
+        RED
+      elsif win?(@bitboards[1])
+        BLUE
+      else
+        nil
       end
     end
 
@@ -74,6 +71,7 @@ module Connect4
     end
 
     def valid_moves
+      return [] unless winner.nil?
       (1..7).filter { |column| (TOP & (1 << @peaks[column - 1])) == 0 }
     end
 
