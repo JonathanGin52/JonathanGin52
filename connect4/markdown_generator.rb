@@ -80,19 +80,22 @@ class MarkdownGenerator
     if octokit.issues.nil?
       markdown.concat "| Oh no... | ¯\\_(ツ)_/¯ | History temporarily unavailable. |\n"
     else
-      octokit.issues.first(5).each do |issue|
+      count = 0
+      octokit.issues.each do |issue|
         break if issue.title.start_with?('connect4|new')
 
         if issue.title.start_with?('connect4|drop|')
+          count += 1
           *, team, move = issue.title.split('|')
           user = if move == 'ai'
-           move = ai_move
-           'Connect4 AI'
-         else
-           login = issue.user.login
-           "[@#{login}](https://github.com/#{login})"
-         end
+            move = ai_move
+            'Connect4 AI'
+          else
+            login = issue.user.login
+            "[@#{login}](https://github.com/#{login})"
+          end
           markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
+          break if count >= 5
         end
       end
     end
