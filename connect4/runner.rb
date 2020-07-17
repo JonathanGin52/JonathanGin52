@@ -9,7 +9,7 @@ module Connect4
   class Runner
     IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
-    MARKDOWN_PATH = 'connect4.md'
+    MARKDOWN_PATH = 'README.md'
 
     def initialize(github_token:, issue_number:, issue_title:, repository:, user:)
       @github_token = github_token
