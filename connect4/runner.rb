@@ -12,12 +12,20 @@ module Connect4
     GAME_DATA_PATH = 'connect4/connect4.yml'
     MARKDOWN_PATH = 'README.md'
 
-    def initialize(github_token:, issue_number:, issue_title:, repository:, user:)
+    def initialize(
+      github_token:,
+      issue_number:,
+      issue_title:,
+      repository:,
+      user:,
+      development: false
+    )
       @github_token = github_token
       @repository = repository
       @issue_number = issue_number
       @issue_title = issue_title
       @user = user
+      @development = development
     end
 
     def run
@@ -61,7 +69,7 @@ module Connect4
     end
 
     def handle_new_game
-      if game.over?
+      if game.over? || @user.downcase == 'jonathangin52'
         @game = Game.new
       else
         comment = "There is currently a game still in progress!"
@@ -83,19 +91,25 @@ module Connect4
       else
         "@#{@user} started a new game!"
       end
-      octokit.write_to_repo(
-        filepath: GAME_DATA_PATH,
-        message: message,
-        sha: raw_game_data.sha,
-        content: game.serialize
-      )
-      octokit.write_to_repo(
-        filepath: MARKDOWN_PATH,
-        message: message,
-        sha: raw_markdown_data.sha,
-        content: to_markdown,
-      )
-      octokit.add_reaction(reaction: 'rocket')
+      if @development
+        File.write(GAME_DATA_PATH, game.serialize)
+        File.write(MARKDOWN_PATH, to_markdown)
+        puts message
+      else
+        octokit.write_to_repo(
+          filepath: GAME_DATA_PATH,
+          message: message,
+          sha: raw_game_data.sha,
+          content: game.serialize
+        )
+        octokit.write_to_repo(
+          filepath: MARKDOWN_PATH,
+          message: message,
+          sha: raw_markdown_data.sha,
+          content: to_markdown,
+        )
+        octokit.add_reaction(reaction: 'rocket')
+      end
     end
 
     def to_markdown
