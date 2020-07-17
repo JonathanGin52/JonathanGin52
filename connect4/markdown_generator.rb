@@ -14,7 +14,7 @@ class MarkdownGenerator
     @octokit = octokit
   end
 
-  def generate
+  def generate(ai_move: nil)
     current_turn = game.current_turn
 
     markdown = <<~HTML
@@ -83,6 +83,7 @@ class MarkdownGenerator
         if issue.title.start_with?('connect4|drop|')
           *, team, move = issue.title.split('|')
           user = if move == 'ai'
+           move = ai_move
            'Connect4 AI'
          else
            login = issue.user.login

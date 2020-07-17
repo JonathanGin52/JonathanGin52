@@ -103,7 +103,7 @@ module Connect4
         game: game,
         issue_title: @issue_title,
         octokit: octokit,
-      ).generate
+      ).generate(ai_move: @ai_move)
     end
 
     def acknowledge_issue
