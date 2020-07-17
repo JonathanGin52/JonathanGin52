@@ -1,6 +1,12 @@
+require_relative './game'
+
 class MarkdownGenerator
   IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
   ISSUE_BASE_URL = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
+
+  RED_IMAGE = "![](#{IMAGE_BASE_URL}/red.png)"
+  BLUE_IMAGE = "![](#{IMAGE_BASE_URL}/blue.png)"
+  BLANK_IMAGE = "![](#{IMAGE_BASE_URL}/blank.png)"
 
   def initialize(game:, issue_title:, octokit:)
     @game = game
@@ -20,7 +26,7 @@ class MarkdownGenerator
         <!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=JonathanGin52.JonathanGin52) -->
 
         ## Join my community Connect Four game!
-        Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a piece in.
+        Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a token in.
 
     HTML
 
@@ -44,18 +50,14 @@ class MarkdownGenerator
     markdown.concat("|#{headers.join('|')}|\n")
     markdown.concat("| - | - | - | - | - | - | - |\n")
 
-    red = "![](#{IMAGE_BASE_URL}/red.png)"
-    blue = "![](#{IMAGE_BASE_URL}/blue.png)"
-    blank = "![](#{IMAGE_BASE_URL}/blank.png)"
-
     game.board.each do |row|
       format = row.map do |cell|
-        if cell == 'X'
-          red
-        elsif cell == 'O'
-          blue
+        if cell == Game::RED
+          RED_IMAGE
+        elsif cell == Game::BLUE
+          BLUE_IMAGE
         else
-          blank
+          BLANK_IMAGE
         end
       end
       markdown.concat("|#{format.join('|')}|\n")

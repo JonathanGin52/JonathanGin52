@@ -1,18 +1,11 @@
-#   6 13 20 27 34 41 48   55 62     Additional row
-# +---------------------+
-# | 5 12 19 26 33 40 47 | 54 61     top row
-# | 4 11 18 25 32 39 46 | 53 60
-# | 3 10 17 24 31 38 45 | 52 59
-# | 2  9 16 23 30 37 44 | 51 58
-# | 1  8 15 22 29 36 43 | 50 57
-# | 0  7 14 21 28 35 42 | 49 56 63  bottom row
-# +---------------------+
-
 require 'yaml'
 require_relative './invalid_move_error'
 
 module Connect4
   class Game
+    RED = 'red'
+    BLUE = 'blue'
+
     attr_reader :turn
 
     def initialize(
@@ -38,14 +31,14 @@ module Connect4
     def status_string
       if over?
         if win?(@bitboards[0])
-          'Red team wins!'
+          "#{RED.capitalize} team wins!"
         elsif win?(@bitboards[1])
-          'Blue team wins!'
+          "#{BLUE.capitalize} team wins!"
         else
           'The game was a draw!'
         end
       else
-        'The game is ongoing'
+        'The game still is ongoing'
       end
     end
 
@@ -57,12 +50,13 @@ module Connect4
       end
     end
 
+    # We can safely memoize here because only 1 move is ever made at a time
     def winner
       @winner ||= begin
         if win?(@bitboards[0])
-          'red'
+          RED
         elsif win?(@bitboards[1])
-          'blue'
+          BLUE
         else
           nil
         end
@@ -84,7 +78,7 @@ module Connect4
     end
 
     def current_turn
-      turn.even? ? 'red' : 'blue'
+      turn.even? ? RED : BLUE
     end
 
     def serialize
@@ -103,9 +97,9 @@ module Connect4
         0.upto(7) do |col|
           value = row + 7 * col
           if ((@bitboards[0] >> value) & 1) == 1
-            board[row][col] = 'X'
+            board[row][col] = RED
           elsif ((@bitboards[1] >> value) & 1) == 1
-            board[row][col] = 'O'
+            board[row][col] = BLUE
           end
         end
       end
@@ -122,8 +116,6 @@ module Connect4
 
     def win?(bitboard)
       [1, 6, 7, 8].each do |direction|
-        # shifted_bitboard = bitboard & (bitboard >> direction)
-        # return true if (shifted_bitboard && (shifted_bitboard >> (2 * direction))) != 0
         return true if (bitboard & (bitboard >> direction) & (bitboard >> (2 * direction)) & (bitboard >> (3 * direction)) != 0)
       end
 
