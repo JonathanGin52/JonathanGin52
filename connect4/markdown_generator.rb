@@ -65,10 +65,12 @@ class MarkdownGenerator
     end
 
     unless game.over?
-      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from the Connect4 AI!\n")
+      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from my Connect4 Bot!\n")
     end
 
     markdown.concat <<~HTML
+
+        Interested in how everything works? [Click here](connect4/README.md) to read up on what's happening behind the scenes.
 
         **Most recent moves**
         | Team | Move | Made by |
