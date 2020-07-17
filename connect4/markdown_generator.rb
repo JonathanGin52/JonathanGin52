@@ -26,7 +26,7 @@ class MarkdownGenerator
         <!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=JonathanGin52.JonathanGin52) -->
 
         ## Join my community Connect Four game!
-        Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a disc in.
+        Everyone is welcome to participate! To make a move, click on the **column number** you wish to drop your disk in.
 
     HTML
 

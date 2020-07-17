@@ -79,7 +79,7 @@ module Connect4
       end
 
       message = if command == 'drop'
-        "#{handle} dropped a #{team} disc in column #{move}"
+        "#{handle} dropped a #{team} disk in column #{move}"
       else
         "@#{@user} started a new game!"
       end
