@@ -65,7 +65,7 @@ class MarkdownGenerator
     end
 
     unless game.over?
-      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from my Connect4 Bot!\n")
+      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot!\n")
     end
 
     markdown.concat <<~HTML
@@ -87,12 +87,13 @@ class MarkdownGenerator
         if issue.title.start_with?('connect4|drop|')
           count += 1
           *, team, move = issue.title.split('|')
+          login = issue.user.login
+          github_user = "[@#{login}](https://github.com/#{login})"
           user = if move == 'ai'
             move = ai_move
-            'Connect4 AI'
+            "Connect4Bot on behalf of #{github_user}"
           else
-            login = issue.user.login
-            "[@#{login}](https://github.com/#{login})"
+            github_user
           end
           markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
           break if count >= 5

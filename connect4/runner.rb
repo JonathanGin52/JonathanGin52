@@ -73,7 +73,7 @@ module Connect4
       *, command, team, move = @issue_title.split('|')
       handle = if move == 'ai'
         move = @ai_move
-        'Connect4 AI'
+        'Connect4Bot'
       else
         "@#{@user}"
       end
