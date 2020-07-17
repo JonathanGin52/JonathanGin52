@@ -6,7 +6,7 @@ module Connect4
     RED = 'red'
     BLUE = 'blue'
 
-    attr_reader :turn
+    attr_reader :turn, :bitboards
 
     def initialize(
       player1_board: 0,
@@ -88,30 +88,29 @@ module Connect4
       }.to_yaml
     end
 
-    def board
-      board = Array.new(6) { Array.new(7) { '*' } }
+    def to_s
+      board = "  1 2 3 4 5 6 7\n+---------------+\n"
 
-      0.upto(5) do |row|
-        0.upto(7) do |col|
+      5.downto(0) do |row|
+        line = (0...7).map do |col|
           value = row + 7 * col
           if ((@bitboards[0] >> value) & 1) == 1
-            board[row][col] = RED
+            'X'
           elsif ((@bitboards[1] >> value) & 1) == 1
-            board[row][col] = BLUE
+            'O'
+          else
+            '*'
           end
         end
+        board.concat("| #{line.join(' ')} |\n")
       end
-      board = board.reverse
-    end
-
-    def print_board
-      puts board.map { |row| row.join(' ') }.join("\n")
+      board.concat("+---------------+\n")
     end
 
     def clone
       Game.new(
-        player1_board: @bitboards[0].dup,
-        player2_board: @bitboards[1].dup,
+        player1_board: @bitboards[0],
+        player2_board: @bitboards[1],
         peaks: @peaks.dup,
         turn: @turn
       )

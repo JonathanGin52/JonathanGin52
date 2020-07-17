@@ -50,11 +50,12 @@ class MarkdownGenerator
     markdown.concat("|#{headers.join('|')}|\n")
     markdown.concat("| - | - | - | - | - | - | - |\n")
 
-    game.board.each do |row|
-      format = row.map do |cell|
-        if cell == Connect4::Game::RED
+    5.downto(0) do |row|
+      format = (0...7).map do |col|
+        offset = row + 7 * col
+        if ((game.bitboards[0] >> offset) & 1) == 1
           RED_IMAGE
-        elsif cell == Connect4::Game::BLUE
+        elsif ((game.bitboards[1] >> offset) & 1) == 1
           BLUE_IMAGE
         else
           BLANK_IMAGE
