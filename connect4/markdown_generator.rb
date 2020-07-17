@@ -70,7 +70,7 @@ class MarkdownGenerator
 
     markdown.concat <<~HTML
 
-        Interested in how everything works? [Click here](connect4/README.md) to read up on what's happening behind the scenes.
+        Interested in how everything works? [Click here](JonathanGin52/JonathanGin52/tree/master/connect4) to read up on what's happening behind the scenes.
 
         **Most recent moves**
         | Team | Move | Made by |
