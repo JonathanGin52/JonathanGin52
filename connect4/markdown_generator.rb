@@ -52,9 +52,9 @@ class MarkdownGenerator
 
     game.board.each do |row|
       format = row.map do |cell|
-        if cell == Game::RED
+        if cell == Connect4::Game::RED
           RED_IMAGE
-        elsif cell == Game::BLUE
+        elsif cell == Connect4::Game::BLUE
           BLUE_IMAGE
         else
           BLANK_IMAGE
