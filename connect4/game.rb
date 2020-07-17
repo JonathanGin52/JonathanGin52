@@ -108,6 +108,15 @@ module Connect4
       puts board.map { |row| row.join(' ') }.join("\n")
     end
 
+    def clone
+      Game.new(
+        player1_board: @bitboards[0].dup,
+        player2_board: @bitboards[1].dup,
+        peaks: @peaks.dup,
+        turn: @turn
+      )
+    end
+
     private
 
     TOP = 0b1000000_1000000_1000000_1000000_1000000_1000000_1000000

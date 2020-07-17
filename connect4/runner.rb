@@ -1,4 +1,5 @@
 require_relative './game'
+require_relative './ai'
 require_relative './octokit_client'
 require_relative './markdown_generator'
 require_relative './synchronization_error'
@@ -26,7 +27,7 @@ module Connect4
       acknowledge_issue
 
       if command == 'drop'
-        handle_move(player: split_input[2], move: Integer(split_input[3]))
+        handle_move(player: split_input[2], move: split_input[3])
       elsif command == 'new'
         handle_new_game
       else
@@ -47,7 +48,10 @@ module Connect4
 
     def handle_move(player:, move:)
       raise SynchronizationError unless game.current_turn == player
-      game.make_move(move)
+
+      move = Connect4::Ai.new(game: game).best_move if move == 'ai'
+      @ai_move = move
+      game.make_move(Integer(move))
     rescue SynchronizationError => e
       comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you. Please refresh and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
@@ -67,8 +71,15 @@ module Connect4
 
     def write
       *, command, team, move = @issue_title.split('|')
+      handle = if move == 'ai'
+        move = @ai_move
+        'Connect4 AI'
+      else
+        "@#{@user}"
+      end
+
       message = if command == 'drop'
-        "@#{@user} dropped a #{team} disc in column #{move}"
+        "#{handle} dropped a #{team} disc in column #{move}"
       else
         "@#{@user} started a new game!"
       end
@@ -85,8 +96,6 @@ module Connect4
         content: to_markdown,
       )
       octokit.add_reaction(reaction: 'rocket')
-      # File.write(GAME_DATA_PATH, game.serialize)
-      # File.write(MARKDOWN_PATH, to_markdown)
     end
 
     def to_markdown

@@ -26,7 +26,7 @@ class MarkdownGenerator
         <!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=JonathanGin52.JonathanGin52) -->
 
         ## Join my community Connect Four game!
-        Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a token in.
+        Everyone is welcome to participate! To make a move, click on the number at the top of the column you wish to drop a disc in.
 
     HTML
 
@@ -63,6 +63,10 @@ class MarkdownGenerator
       markdown.concat("|#{format.join('|')}|\n")
     end
 
+    unless game.over?
+      markdown.concat("\nTired of waiting? [Request a move from the AI!](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)\n")
+    end
+
     markdown.concat <<~HTML
 
         **Most recent moves**
@@ -78,8 +82,13 @@ class MarkdownGenerator
 
         if issue.title.start_with?('connect4|drop|')
           *, team, move = issue.title.split('|')
-          user = issue.user.login
-          markdown.concat("| #{team.capitalize} | #{move} | [@#{user}](https://github.com/#{user}) |\n")
+          user = if move == 'ai'
+           'Connect4 AI'
+         else
+           login = issue.user.login
+           "[@#{login}](https://github.com/#{login})"
+         end
+          markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
         end
       end
     end
