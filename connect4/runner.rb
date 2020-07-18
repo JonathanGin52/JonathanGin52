@@ -64,10 +64,10 @@ module Connect4
       end
       game.make_move(Integer(move))
     rescue SynchronizationError => e
-      comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you. Please refresh and try again."
+      comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the #{player} team, however it was the #{game.current_turn} team's turn to play."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue InvalidMoveError => e
-      comment = "The move you have selected is invalid. Please double check the board and try again."
+      comment = "**#{move}** is an invalid move. Please double check the board and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     end
 
