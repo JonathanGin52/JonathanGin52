@@ -8,9 +8,8 @@ class MarkdownGenerator
   BLUE_IMAGE = "![](#{IMAGE_BASE_URL}/blue.png)"
   BLANK_IMAGE = "![](#{IMAGE_BASE_URL}/blank.png)"
 
-  def initialize(game:, issue_title:, octokit:)
+  def initialize(game:, octokit:)
     @game = game
-    @issue_title = issue_title
     @octokit = octokit
   end
 
@@ -105,8 +104,8 @@ class MarkdownGenerator
           login = issue.user.login
           github_user = "[@#{login}](https://github.com/#{login})"
           user = if move == 'ai'
-            comment = octokit.fetch_comments(issue_number: issue.number).first.body
-            move = comment[/\*\*(\d)\*\*/, -1]
+            comment = octokit.fetch_comments(issue_number: issue.number).find { |comment| comment.user.login == 'github-actions[bot]' }
+            move = comment.body[/\*\*(\d)\*\*/, -1]
             "Connect4Bot on behalf of #{github_user}"
           else
             github_user
@@ -122,5 +121,5 @@ class MarkdownGenerator
 
   private
 
-  attr_reader :game, :octokit, :issue_title
+  attr_reader :game, :octokit
 end

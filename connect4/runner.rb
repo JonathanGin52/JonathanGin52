@@ -116,11 +116,7 @@ module Connect4
     end
 
     def to_markdown
-      MarkdownGenerator.new(
-        game: game,
-        issue_title: @issue_title,
-        octokit: octokit,
-      ).generate
+      MarkdownGenerator.new(game: game, octokit: octokit).generate
     end
 
     def acknowledge_issue
