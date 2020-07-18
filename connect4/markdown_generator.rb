@@ -14,7 +14,7 @@ class MarkdownGenerator
     @octokit = octokit
   end
 
-  def generate(ai_move: nil)
+  def generate
     current_turn = game.current_turn
 
     players = Hash.new(0)
@@ -105,7 +105,8 @@ class MarkdownGenerator
           login = issue.user.login
           github_user = "[@#{login}](https://github.com/#{login})"
           user = if move == 'ai'
-            move = ai_move
+            comment = octokit.fetch_comments(issue_number: issue.number).first.body
+            move = comment[/\*\*(\d)\*\*/, -1]
             "Connect4Bot on behalf of #{github_user}"
           else
             github_user

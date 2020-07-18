@@ -34,6 +34,10 @@ class OctokitClient
     @octokit.contents(@repository, path: filepath)
   end
 
+  def fetch_comments(issue_number: @issue_number)
+    @octokit.issue_comments(@repository, issue_number)
+  end
+
   def write_to_repo(filepath:, message:, sha:, content:)
     @octokit.update_contents(@repository, filepath, message, sha, content)
   end

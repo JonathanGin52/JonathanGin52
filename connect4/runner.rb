@@ -57,8 +57,11 @@ module Connect4
     def handle_move(player:, move:)
       raise SynchronizationError unless game.current_turn == player
 
-      move = Connect4::Ai.new(game: game).best_move if move == 'ai'
-      @ai_move = move
+      if move == 'ai'
+        move = Connect4::Ai.new(game: game).best_move
+        @ai_move = move
+        octokit.add_comment(comment: ":robot: Connect4Bot dropped a disk in column: **#{move}**")
+      end
       game.make_move(Integer(move))
     rescue SynchronizationError => e
       comment = "The board has changed since this issue was opened. Someone must've snuck a move in right before you. Please refresh and try again."
@@ -81,7 +84,7 @@ module Connect4
       *, command, team, move = @issue_title.split('|')
       handle = if move == 'ai'
         move = @ai_move
-        'Connect4Bot'
+        ':robot: Connect4Bot'
       else
         "@#{@user}"
       end
@@ -117,7 +120,7 @@ module Connect4
         game: game,
         issue_title: @issue_title,
         octokit: octokit,
-      ).generate(ai_move: @ai_move)
+      ).generate
     end
 
     def acknowledge_issue
