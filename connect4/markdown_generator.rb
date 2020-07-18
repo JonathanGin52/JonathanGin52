@@ -17,15 +17,30 @@ class MarkdownGenerator
   def generate(ai_move: nil)
     current_turn = game.current_turn
 
+    players = Hash.new(0)
+    total_moves_played = 0
+    completed_games = 0
+    @octokit.issues.each do |issue|
+      players[issue.user.login] += 1
+      if issue.title == 'connect4|new'
+        completed_games += 1
+      else
+        total_moves_played += 1
+      end
+    end
+
     markdown = <<~HTML
         # Hey, I'm Jonathan 👋
 
         [![Twitter Badge](https://img.shields.io/badge/-@JonathanGin52-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/jonathangin52)](https://twitter.com/jonathangin52) [![Linkedin Badge](https://img.shields.io/badge/-JonathanGin-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/jonathangin/)](https://www.linkedin.com/in/jonathangin/)
 
         Nice to meet you! My name is Jonathan. I'm currently studying and working as a [Dev Degree](https://devdegree.ca/) intern @Shopify. I previously worked on building the [Shopify Fulfillment Network](https://www.shopify.com/fulfillment) as a fullstack developer. Nowadays, I am working on Shopify's Experimentation Platform as a data developer.
-        <!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=JonathanGin52.JonathanGin52) -->
 
         ## Join my community Connect Four game!
+        ![](https://img.shields.io/badge/Moves%20played-#{total_moves_played}-blue)
+        ![](https://img.shields.io/badge/Completed%20games-#{completed_games}-brightgreen)
+        ![](https://img.shields.io/badge/Total%20players-#{players.size}-orange)
+
         Everyone is welcome to participate! To make a move, click on the **column number** you wish to drop your disk in.
 
     HTML
