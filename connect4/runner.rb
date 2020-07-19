@@ -10,7 +10,7 @@ module Connect4
   class Runner
     IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
-    MARKDOWN_PATH = 'README.md'
+    README_PATH = 'README.md'
 
     def initialize(
       github_token:,
@@ -94,23 +94,31 @@ module Connect4
       else
         "@#{@user} started a new game!"
       end
+
+      File.write(GAME_DATA_PATH, game.serialize)
+      File.write(README_PATH, to_markdown)
+
       if @development
-        File.write(GAME_DATA_PATH, game.serialize)
-        File.write(MARKDOWN_PATH, to_markdown)
         puts message
       else
-        octokit.write_to_repo(
-          filepath: GAME_DATA_PATH,
-          message: message,
-          sha: raw_game_data.sha,
-          content: game.serialize
-        )
-        octokit.write_to_repo(
-          filepath: MARKDOWN_PATH,
-          message: message,
-          sha: raw_markdown_data.sha,
-          content: to_markdown,
-        )
+        `git add #{GAME_DATA_PATH} #{README_PATH}`
+        `git diff`
+        `git config --global user.email "github-action-bot@example.com"`
+        `git config --global user.name "GitHub Action Bot"`
+        `git commit -m "#{message}" -a || echo "No changes to commit"`
+        `git push`
+        # octokit.write_to_repo(
+        #   filepath: GAME_DATA_PATH,
+        #   message: message,
+        #   sha: raw_game_data.sha,
+        #   content: game.serialize
+        # )
+        # octokit.write_to_repo(
+        #   filepath: README_PATH,
+        #   message: message,
+        #   sha: raw_markdown_data.sha,
+        #   content: to_markdown,
+        # )
         octokit.add_reaction(reaction: 'rocket')
       end
     end
@@ -134,7 +142,7 @@ module Connect4
     end
 
     def raw_markdown_data
-      @raw_markdown_data ||= octokit.fetch_from_repo(MARKDOWN_PATH)
+      @raw_markdown_data ||= octokit.fetch_from_repo(README_PATH)
     end
 
     def octokit
