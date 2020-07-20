@@ -16,17 +16,26 @@ class MarkdownGenerator
   def generate
     current_turn = game.current_turn
 
+    game_winning_move_flag = false
+    game_winning_players = Hash.new(0)
     players = Hash.new(0)
     total_moves_played = 0
     completed_games = 0
     @octokit.issues.each do |issue|
       players[issue.user.login] += 1
       if issue.title == 'connect4|new'
+        game_winning_move_flag = true
         completed_games += 1
       else
         total_moves_played += 1
+        if game_winning_move_flag
+          game_winning_move_flag = false
+          game_winning_players[issue.user.login] += 1
+        end
       end
     end
+
+    game_winning_players = game_winning_players.sort_by { |_, wins| -wins }
 
     markdown = <<~HTML
         # Hey, I'm Jonathan 👋
@@ -91,30 +100,34 @@ class MarkdownGenerator
         | ---- | ---- | ------- |
     HTML
 
-    if octokit.issues.nil?
-      markdown.concat "| Oh no... | ¯\\_(ツ)_/¯ | History temporarily unavailable. |\n"
-    else
-      count = 0
-      octokit.issues.each do |issue|
-        break if issue.title.start_with?('connect4|new')
+    count = 0
+    octokit.issues.each do |issue|
+      break if issue.title.start_with?('connect4|new')
 
-        if issue.title.start_with?('connect4|drop|')
-          count += 1
-          *, team, move = issue.title.split('|')
-          login = issue.user.login
-          github_user = "[@#{login}](https://github.com/#{login})"
-          user = if move == 'ai'
-            comment = octokit.fetch_comments(issue_number: issue.number).find { |comment| comment.user.login == 'github-actions[bot]' }
-            move = comment.body[/\*\*(\d)\*\*/, -1]
-            "Connect4Bot on behalf of #{github_user}"
-          else
-            github_user
-          end
-          markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
-          break if count >= 5
+      if issue.title.start_with?('connect4|drop|')
+        count += 1
+        *, team, move = issue.title.split('|')
+        login = issue.user.login
+        github_user = "[@#{login}](https://github.com/#{login})"
+        user = if move == 'ai'
+          comment = octokit.fetch_comments(issue_number: issue.number).find { |comment| comment.user.login == 'github-actions[bot]' }
+          move = comment.body[/\*\*(\d)\*\*/, -1]
+          "Connect4Bot on behalf of #{github_user}"
+        else
+          github_user
         end
+        markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
+        break if count >= 3
       end
     end
+
+    markdown.concat <<~HTML
+
+        **Game winning moves leaderboard**
+        | Player | Wins |
+        | ------ | -----|
+        #{game_winning_players.map { |player, wins| "| [@#{player}](https://github.com/#{player}) | #{wins} |" }.join("\n")}
+    HTML
 
     markdown
   end

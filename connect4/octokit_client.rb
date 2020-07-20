@@ -54,6 +54,7 @@ class OctokitClient
   def error_notification(reaction:, comment:, error: nil)
     add_reaction(reaction: reaction)
     add_comment(comment: comment)
+    puts comment
     unless error.nil?
       puts '-----------'
       puts "Exception: #{error.full_message}"
