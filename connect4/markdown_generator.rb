@@ -30,7 +30,11 @@ class MarkdownGenerator
         total_moves_played += 1
         if game_winning_move_flag
           game_winning_move_flag = false
-          game_winning_players[issue.user.login] += 1
+          if issue.title.end_with?('ai')
+            game_winning_players['Connect4Bot'] += 1
+          else
+            game_winning_players[issue.user.login] += 1
+          end
         end
       end
     end
@@ -121,12 +125,21 @@ class MarkdownGenerator
       end
     end
 
+    winning_moves_leaderboard = game_winning_players.map do |player, wins|
+      user = if player == 'Connect4Bot'
+        'Connect4Bot :robot:'
+      else
+        "[@#{player}](https://github.com/#{player})"
+      end
+      "| #{user} | #{wins} |"
+    end.join("\n")
+
     markdown.concat <<~HTML
 
         **:trophy: Leaderboard: Most game winning moves :100:**
         | Player | Wins |
         | ------ | -----|
-        #{game_winning_players.map { |player, wins| "| [@#{player}](https://github.com/#{player}) | #{wins} |" }.join("\n")}
+        #{winning_moves_leaderboard}
     HTML
   end
 
