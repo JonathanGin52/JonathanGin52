@@ -44,7 +44,7 @@ class MarkdownGenerator
 
         Nice to meet you! My name is Jonathan. I'm currently studying and working as a [Dev Degree](https://devdegree.ca/) intern @Shopify. I previously worked on building the [Shopify Fulfillment Network](https://www.shopify.com/fulfillment) as a fullstack developer. Nowadays, I am working on Shopify's Experimentation Platform as a data developer.
 
-        ## Join my community Connect Four game!
+        ## :game_die: Join my community Connect Four game!
         ![](https://img.shields.io/badge/Moves%20played-#{total_moves_played}-blue)
         ![](https://img.shields.io/badge/Completed%20games-#{completed_games}-brightgreen)
         ![](https://img.shields.io/badge/Total%20players-#{players.size}-orange)
@@ -88,14 +88,14 @@ class MarkdownGenerator
     end
 
     unless game.over?
-      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot!\n")
+      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot :robot: \n")
     end
 
     markdown.concat <<~HTML
 
         Interested in how everything works? [Click here](https://github.com/JonathanGin52/JonathanGin52/tree/master/connect4) to read up on what's happening behind the scenes.
 
-        **Most recent moves**
+        **:alarm_clock: Most recent moves**
         | Team | Move | Made by |
         | ---- | ---- | ------- |
     HTML
@@ -123,13 +123,11 @@ class MarkdownGenerator
 
     markdown.concat <<~HTML
 
-        **Game winning moves leaderboard**
+        **:trophy: Leaderboard: Most game winning moves :100:**
         | Player | Wins |
         | ------ | -----|
         #{game_winning_players.map { |player, wins| "| [@#{player}](https://github.com/#{player}) | #{wins} |" }.join("\n")}
     HTML
-
-    markdown
   end
 
   private
