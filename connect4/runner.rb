@@ -63,7 +63,7 @@ module Connect4
         octokit.add_comment(comment: ":robot: Connect4Bot dropped a disk in column: **#{move}**")
       else
         issue = octokit.issues[1]
-        unless issue.user.login != @user || issue.title.end_with?('new')
+        unless issue.user.login != @user || issue.title.end_with?('new') || issue.title.end_with?('ai')
           comment = "Hey, no cheating :eyes:! You just played the most recent move. Ask a friend to make the next move, or alternatively, ask Connect4Bot to [make a move]" \
           "(https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7C#{player}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)."
           octokit.error_notification(reaction: 'confused', comment: comment)
@@ -80,6 +80,26 @@ module Connect4
 
     def handle_new_game
       if game.over? || @user.downcase == 'jonathangin52'
+        # red_team = []
+        # blue_team = []
+
+        # octokit.issues.drop(1).each do |issue|
+        #   break if issue.title.start_with?('connect4|new')
+
+        #   *, command, team, move = issue.title.split('|')
+        #   if command == 'drop'
+        #     if move == 'ai'
+        #     end
+        #     if team == Game::RED
+        #       red_team << issue.user.login
+        #     else
+        #       blue_team << issue.user.login
+        #     end
+        #   end
+        # end
+
+        # octokit.add_comment(comment: MarkdownGenerator.game_over_message(red_team: red_team.uniq, blue_team: blue_team.uniq))
+
         @game = Game.new
       else
         comment = "There is currently a game still in progress!"
