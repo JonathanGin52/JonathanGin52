@@ -94,7 +94,7 @@ module Connect4
     end
 
     def handle_game_over
-      metadata[:game_winning_players][issue.user.login] += 1 unless game.winner.nil?
+      metadata[:game_winning_players][@user] += 1 unless game.winner.nil?
       metadata[:completed_games] += 1
 
       red_team = Hash.new(0)
