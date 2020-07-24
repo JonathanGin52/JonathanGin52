@@ -6,10 +6,13 @@ require_relative './synchronization_error'
 require_relative './malformed_command_error'
 require_relative './invalid_move_error'
 
+require 'yaml'
+
 module Connect4
   class Runner
     IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
+    METADATA_FILE_PATH = 'connect4/metadata.yml'
     README_PATH = 'README.md'
 
     def initialize(
@@ -70,6 +73,7 @@ module Connect4
         end
       end
       game.make_move(Integer(move))
+      metadata[:all_players][issue.user.login] += 1
 
       handle_game_over if game.over?
     rescue SynchronizationError => e
@@ -90,6 +94,9 @@ module Connect4
     end
 
     def handle_game_over
+      metadata[:game_winning_players][issue.user.login] += 1 unless game.winner.nil?
+      metadata[:completed_games] += 1
+
       red_team = Hash.new(0)
       blue_team = Hash.new(0)
 
@@ -108,7 +115,12 @@ module Connect4
         end
       end
 
-      octokit.add_comment(comment: MarkdownGenerator.new.game_over_message(red_team: red_team, blue_team: blue_team))
+      game_over_message = MarkdownGenerator.new(game: game).game_over_message(red_team: red_team, blue_team: blue_team)
+      if @development
+        File.write('game_over.md', game_over_message)
+      else
+        octokit.add_comment(comment: game_over_message)
+      end
     end
 
     def write
@@ -131,9 +143,11 @@ module Connect4
 
       if @development
         File.write('connect4/local.yml', game.serialize)
+        File.write('connect4/local_metadata.yml', metadata.to_yaml)
         puts message
       else
-        `git add #{GAME_DATA_PATH} #{README_PATH}`
+        File.write(METADATA_FILE_PATH, metadata.to_yaml)
+        `git add #{GAME_DATA_PATH} #{README_PATH} #{METADATA_FILE_PATH}`
         `git diff`
         `git config --global user.email "github-action-bot@example.com"`
         `git config --global user.name "GitHub Action Bot"`
@@ -156,13 +170,40 @@ module Connect4
     end
 
     def generate_readme
-      MarkdownGenerator.new(game: game, octokit: octokit).readme
+      recent_moves = []
+      octokit.issues.each do |issue|
+        break if recent_moves.length == 3 || issue.title.start_with?('connect4|new')
+
+        if issue.title.start_with?('connect4|drop|')
+          *, team, move = issue.title.split('|')
+          login = issue.user.login
+          github_user = "[@#{login}](https://github.com/#{login})"
+          user = if move == 'ai'
+            comment = octokit.fetch_comments(issue_number: issue.number).find { |comment| comment.user.login == 'github-actions[bot]' }
+            move = comment.body[/\*\*(\d)\*\*/, -1]
+            "Connect4Bot on behalf of #{github_user}"
+          else
+            github_user
+          end
+          recent_moves << [team.capitalize, move, user]
+        end
+      end
+      MarkdownGenerator.new(game: game).readme(metadata: metadata, recent_moves: recent_moves)
     end
 
     def acknowledge_issue
       octokit.add_label(label: 'connect4')
       octokit.add_reaction(reaction: 'eyes')
       octokit.close_issue
+    end
+
+    def metadata
+      @metadata ||= begin
+        metadata = YAML.load_file(METADATA_FILE_PATH)
+        metadata[:all_players].default = 0
+        metadata[:game_winning_players].default = 0
+        metadata
+      end
     end
 
     def game

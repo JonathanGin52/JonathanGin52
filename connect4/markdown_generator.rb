@@ -8,38 +8,16 @@ class MarkdownGenerator
   BLUE_IMAGE = "![](#{IMAGE_BASE_URL}/blue.png)"
   BLANK_IMAGE = "![](#{IMAGE_BASE_URL}/blank.png)"
 
-  def initialize(game:, octokit:)
+  def initialize(game:)
     @game = game
-    @octokit = octokit
   end
 
-  def readme
+  def readme(metadata:, recent_moves:)
     current_turn = game.current_turn
 
-    game_winning_move_flag = false
-    game_winning_players = Hash.new(0)
-    players = Hash.new(0)
-    total_moves_played = 0
-    completed_games = 0
-    octokit.issues.each do |issue|
-      players[issue.user.login] += 1
-      if issue.title == 'connect4|new'
-        game_winning_move_flag = true
-        completed_games += 1
-      else
-        total_moves_played += 1
-        if game_winning_move_flag
-          game_winning_move_flag = false
-          if issue.title.end_with?('ai')
-            game_winning_players['Connect4Bot'] += 1
-          else
-            game_winning_players[issue.user.login] += 1
-          end
-        end
-      end
-    end
-
-    game_winning_players = game_winning_players.sort_by { |_, wins| -wins }
+    total_moves_played = metadata[:all_players].values.sum
+    completed_games = metadata[:completed_games]
+    game_winning_players = metadata[:game_winning_players].sort_by { |_, wins| -wins }
 
     markdown = <<~HTML
         # Hey, I'm Jonathan 👋
@@ -51,7 +29,7 @@ class MarkdownGenerator
         ## :game_die: Join my community Connect Four game!
         ![](https://img.shields.io/badge/Moves%20played-#{total_moves_played}-blue)
         ![](https://img.shields.io/badge/Completed%20games-#{completed_games}-brightgreen)
-        ![](https://img.shields.io/badge/Total%20players-#{players.size}-orange)
+        ![](https://img.shields.io/badge/Total%20players-#{metadata[:all_players].size}-orange)
 
         Everyone is welcome to participate! To make a move, click on the **column number** you wish to drop your disk in.
 
@@ -80,26 +58,7 @@ class MarkdownGenerator
         | ---- | ---- | ------- |
     HTML
 
-    count = 0
-    octokit.issues.each do |issue|
-      break if issue.title.start_with?('connect4|new')
-
-      if issue.title.start_with?('connect4|drop|')
-        count += 1
-        *, team, move = issue.title.split('|')
-        login = issue.user.login
-        github_user = "[@#{login}](https://github.com/#{login})"
-        user = if move == 'ai'
-          comment = octokit.fetch_comments(issue_number: issue.number).find { |comment| comment.user.login == 'github-actions[bot]' }
-          move = comment.body[/\*\*(\d)\*\*/, -1]
-          "Connect4Bot on behalf of #{github_user}"
-        else
-          github_user
-        end
-        markdown.concat("| #{team.capitalize} | #{move} | #{user} |\n")
-        break if count >= 3
-      end
-    end
+    recent_moves.each { |(team, move, user)| markdown.concat("| #{team} | #{move} | #{user} |\n") }
 
     winning_moves_leaderboard = game_winning_players.map do |player, wins|
       user = if player == 'Connect4Bot'
@@ -136,6 +95,8 @@ class MarkdownGenerator
       ### :star: Game board
       #{generate_game_board}
 
+      ## Thank you to everybody who participated!
+
       ### Red team roster
       #{generate_player_moves_table(red_team)}
 
@@ -146,7 +107,7 @@ class MarkdownGenerator
 
   private
 
-  attr_reader :game, :octokit
+  attr_reader :game
 
   def generate_game_board
     valid_moves = game.valid_moves
