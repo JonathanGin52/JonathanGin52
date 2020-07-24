@@ -60,22 +60,24 @@ class MarkdownGenerator
 
     recent_moves.each { |(team, move, user)| markdown.concat("| #{team} | #{move} | #{user} |\n") }
 
-    winning_moves_leaderboard = game_winning_players.map do |player, wins|
-      user = if player == 'Connect4Bot'
-        'Connect4Bot :robot:'
-      else
-        "[@#{player}](https://github.com/#{player})"
-      end
-      "| #{user} | #{wins} |"
-    end.join("\n")
-
     markdown.concat <<~HTML
 
         **:trophy: Leaderboard: Most game winning moves :star:**
         | Player | Wins |
         | ------ | -----|
-        #{winning_moves_leaderboard}
     HTML
+
+    game_winning_players.first(5).each do |player, wins|
+      next if player == 'JonathanGin52'
+      user = if player == 'Connect4Bot'
+        'Connect4Bot :robot:'
+      else
+        "[@#{player}](https://github.com/#{player})"
+      end
+      markdown.concat("| #{user} | #{wins} |\n")
+    end
+
+    markdown
   end
 
   def game_over_message(red_team:, blue_team:)

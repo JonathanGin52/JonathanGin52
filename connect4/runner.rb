@@ -73,7 +73,7 @@ module Connect4
         end
       end
       game.make_move(Integer(move))
-      metadata[:all_players][issue.user.login] += 1
+      metadata[:all_players][@user] += 1
 
       handle_game_over if game.over?
     rescue SynchronizationError => e
