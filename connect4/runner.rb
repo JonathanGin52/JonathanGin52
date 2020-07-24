@@ -70,6 +70,8 @@ module Connect4
         end
       end
       game.make_move(Integer(move))
+
+      handle_game_over if game.over?
     rescue SynchronizationError => e
       comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the #{player} team, however it was the #{game.current_turn} team's turn to play."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
@@ -80,31 +82,33 @@ module Connect4
 
     def handle_new_game
       if game.over? || @user.downcase == 'jonathangin52'
-        # red_team = []
-        # blue_team = []
-
-        # octokit.issues.drop(1).each do |issue|
-        #   break if issue.title.start_with?('connect4|new')
-
-        #   *, command, team, move = issue.title.split('|')
-        #   if command == 'drop'
-        #     if move == 'ai'
-        #     end
-        #     if team == Game::RED
-        #       red_team << issue.user.login
-        #     else
-        #       blue_team << issue.user.login
-        #     end
-        #   end
-        # end
-
-        # octokit.add_comment(comment: MarkdownGenerator.game_over_message(red_team: red_team.uniq, blue_team: blue_team.uniq))
-
         @game = Game.new
       else
         comment = "There is currently a game still in progress!"
         octokit.error_notification(reaction: 'confused', comment: comment)
       end
+    end
+
+    def handle_game_over
+      red_team = Hash.new(0)
+      blue_team = Hash.new(0)
+
+      octokit.issues.each do |issue|
+        break if issue.title.start_with?('connect4|new')
+
+        *, command, team, move = issue.title.split('|')
+        if command == 'drop'
+          user = "[@#{issue.user.login}](https://github.com/#{issue.user.login})"
+          user.concat(' :robot:') if move == 'ai'
+          if team == Game::RED
+            red_team[user] += 1
+          else
+            blue_team[user] += 1
+          end
+        end
+      end
+
+      octokit.add_comment(comment: MarkdownGenerator.new.game_over_message(red_team: red_team, blue_team: blue_team))
     end
 
     def write
@@ -123,9 +127,10 @@ module Connect4
       end
 
       File.write(GAME_DATA_PATH, game.serialize)
-      File.write(README_PATH, to_markdown)
+      File.write(README_PATH, generate_readme)
 
       if @development
+        File.write('connect4/local.yml', game.serialize)
         puts message
       else
         `git add #{GAME_DATA_PATH} #{README_PATH}`
@@ -144,14 +149,14 @@ module Connect4
         #   filepath: README_PATH,
         #   message: message,
         #   sha: raw_markdown_data.sha,
-        #   content: to_markdown,
+        #   content: generate_readme,
         # )
         octokit.add_reaction(reaction: 'rocket')
       end
     end
 
-    def to_markdown
-      MarkdownGenerator.new(game: game, octokit: octokit).generate
+    def generate_readme
+      MarkdownGenerator.new(game: game, octokit: octokit).readme
     end
 
     def acknowledge_issue
@@ -161,7 +166,13 @@ module Connect4
     end
 
     def game
-      @game ||= Game.load(Base64.decode64(raw_game_data.content))
+      @game ||= begin
+        if @development
+          Game.new(YAML.load_file('connect4/local.yml'))
+        else
+          Game.load(Base64.decode64(raw_game_data.content))
+        end
+      end
     end
 
     def raw_game_data

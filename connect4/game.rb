@@ -31,9 +31,9 @@ module Connect4
     def status_string
       if over?
         if win?(@bitboards[0])
-          "#{RED.capitalize} team wins!"
+          "Game over, the #{RED} team has won!"
         elsif win?(@bitboards[1])
-          "#{BLUE.capitalize} team wins!"
+          "Game over, the #{BLUE} team has won!"
         else
           'The game was a draw!'
         end
