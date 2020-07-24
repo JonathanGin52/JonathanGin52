@@ -105,7 +105,7 @@ module Connect4
 
         *, command, team, move = issue.title.split('|')
         if command == 'drop'
-          user = "[@#{issue.user.login}](https://github.com/#{issue.user.login})"
+          user = "@#{issue.user.login}"
           user.concat(' :robot:') if move == 'ai'
           if team == Game::RED
             red_team[user] += 1
