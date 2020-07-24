@@ -5,33 +5,33 @@
 Nice to meet you! My name is Jonathan. I'm currently studying and working as a [Dev Degree](https://devdegree.ca/) intern @Shopify. I previously worked on building the [Shopify Fulfillment Network](https://www.shopify.com/fulfillment) as a fullstack developer. Nowadays, I am working on Shopify's Experimentation Platform as a data developer.
 
 ## :game_die: Join my community Connect Four game!
-![](https://img.shields.io/badge/Moves%20played-151-blue)
+![](https://img.shields.io/badge/Moves%20played-152-blue)
 ![](https://img.shields.io/badge/Completed%20games-8-brightgreen)
-![](https://img.shields.io/badge/Total%20players-58-orange)
+![](https://img.shields.io/badge/Total%20players-59-orange)
 
 Everyone is welcome to participate! To make a move, click on the **column number** you wish to drop your disk in.
 
-It is the **red** team's turn to play.
+It is the **blue** team's turn to play.
 
-|1|2|3|4|5|6|[7](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C7&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)|
+|1|2|3|4|5|6|[7](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cblue%7C7&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)|
 | - | - | - | - | - | - | - |
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
-|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
+|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|
 
-Tired of waiting? [Request a move](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot :robot: 
+Tired of waiting? [Request a move](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cblue%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot :robot: 
 
 Interested in how everything works? [Click here](https://github.com/JonathanGin52/JonathanGin52/tree/master/connect4) to read up on what's happening behind the scenes.
 
 **:alarm_clock: Most recent moves**
 | Team | Move | Made by |
 | ---- | ---- | ------- |
+| Red | 7 | [@ozh](https://github.com/ozh) |
 | Blue | 3 | [@elamperti](https://github.com/elamperti) |
 | Red | 3 | [@will-r-wang](https://github.com/will-r-wang) |
-| Blue | 3 | [@Fabian9799](https://github.com/Fabian9799) |
 
 **:trophy: Leaderboard: Most game winning moves :star:**
 | Player | Wins |
