@@ -19,7 +19,8 @@ jobs:
         echo ::set-env name=EVENT_ISSUE_NUMBER::${{ github.event.issue.number }}
         echo ::set-env name=EVENT_USER_LOGIN::${{ github.event.issue.user.login }}
 
-    - uses: ruby/setup-ruby@v1
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.1
 
