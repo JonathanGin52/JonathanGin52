@@ -48,10 +48,13 @@ module Connect4
       # Write game state
       write
     rescue ArgumentError => e
-      comment = "There seems to be an error in your input\nError: #{e.message}"
+      comment = ":warning: There seems to be an error in your input.\nError: #{e.message}"
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue MalformedCommandError => e
-      comment = "Your command could not be parsed. Make sure you don't edit the issue title."
+      comment = ":warning: Your command could not be parsed. Make sure you don't edit the issue title!"
+      octokit.error_notification(reaction: 'confused', comment: comment, error: e)
+    rescue StandardError => e
+      comment = ":warning: Hmm, something seems to have gone wrong.\nError: #{e.message}\ncc: @JonathanGin52"
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     end
 
@@ -77,7 +80,7 @@ module Connect4
 
       handle_game_over if game.over?
     rescue SynchronizationError => e
-      comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the #{player} team, however it was the #{game.current_turn} team's turn to play."
+      comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the **#{player}** team, however it was the **#{game.current_turn}** team's turn to play. This was most likely caused by someone sneaking a move in right before you. Please refresh the page and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue InvalidMoveError => e
       comment = "**#{move}** is an invalid move. Please double check the board and try again."
@@ -85,7 +88,7 @@ module Connect4
     end
 
     def handle_new_game
-      if game.over? || @user.downcase == 'jonathangin52'
+      if game.over? || @user == 'JonathanGin52'
         @game = Game.new
       else
         comment = "There is currently a game still in progress!"
