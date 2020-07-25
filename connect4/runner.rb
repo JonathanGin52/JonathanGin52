@@ -10,7 +10,6 @@ require 'yaml'
 
 module Connect4
   class Runner
-    IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
     GAME_DATA_PATH = 'connect4/connect4.yml'
     METADATA_FILE_PATH = 'connect4/metadata.yml'
     README_PATH = 'README.md'

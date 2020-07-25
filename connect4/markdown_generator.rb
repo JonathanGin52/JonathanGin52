@@ -3,6 +3,7 @@ require_relative './game'
 class MarkdownGenerator
   IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
   ISSUE_BASE_URL = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
+  ISSUE_BODY = 'body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.'
 
   RED_IMAGE = "![](#{IMAGE_BASE_URL}/red.png)"
   BLUE_IMAGE = "![](#{IMAGE_BASE_URL}/blue.png)"
@@ -36,7 +37,7 @@ class MarkdownGenerator
     HTML
 
     game_status = if game.over?
-      "#{game.status_string} [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)"
+      "#{game.status_string} [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew&#{ISSUE_BODY})"
     else
       "It is the **#{current_turn}** team's turn to play."
     end
@@ -46,7 +47,7 @@ class MarkdownGenerator
     markdown.concat(generate_game_board)
 
     unless game.over?
-      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) from Connect4Bot :robot: \n")
+      markdown.concat("\nTired of waiting? [Request a move](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7Cai&#{ISSUE_BODY}) from Connect4Bot :robot: \n")
     end
 
     markdown.concat <<~HTML
@@ -92,7 +93,7 @@ class MarkdownGenerator
       # :tada: The game has ended :confetti_ball:
       #{victory_text}
 
-      [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew)
+      [Click here to start a new game!](#{ISSUE_BASE_URL}?title=connect4%7Cnew&#{ISSUE_BODY})
 
       ### :star: Game board
       #{generate_game_board}
@@ -119,7 +120,7 @@ class MarkdownGenerator
     else
       (1..7).map do |column|
         if valid_moves.include?(column)
-          "[#{column}](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7C#{column}&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)"
+          "[#{column}](#{ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{current_turn}%7C#{column}&#{ISSUE_BODY})"
         else
           column.to_s
         end
