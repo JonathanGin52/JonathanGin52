@@ -69,7 +69,7 @@ module Connect4
         octokit.add_comment(comment: ":robot: Connect4Bot dropped a disk in column: **#{move}**")
       else
         issue = octokit.issues[1]
-        if issue.user.login = @user && !issue.title.end_with?('ai', 'new')
+        if issue.user.login == @user && !issue.title.end_with?('ai', 'new')
           comment = "Hey, no cheating :eyes:! You just played the most recent move. Ask a friend to make the next move, or alternatively, ask Connect4Bot to " \
           "[make a move](#{MarkdownGenerator::ISSUE_BASE_URL}?title=connect4%7Cdrop%7C#{team}%7Cai&#{MarkdownGenerator::ISSUE_BODY})"
           octokit.error_notification(reaction: 'confused', comment: comment)
