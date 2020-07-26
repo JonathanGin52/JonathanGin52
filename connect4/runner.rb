@@ -33,19 +33,20 @@ module Connect4
     def run
       split_input = @issue_title.split('|')
       command = split_input[1]
+      team = split_input[2]
+      move = split_input[3]
 
       acknowledge_issue
 
       if command == 'drop'
-        handle_move(player: split_input[2], move: split_input[3])
+        handle_move(team: team, move: move)
       elsif command == 'new'
         handle_new_game
       else
         raise MalformedCommandError, "unrecognized command"
       end
 
-      # Write game state
-      write
+      write_game_state(command: command, team: team, move: move)
     rescue ArgumentError => e
       comment = ":warning: There seems to be an error in your input.\nError: #{e.message}"
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
@@ -59,8 +60,8 @@ module Connect4
 
     private
 
-    def handle_move(player:, move:)
-      raise SynchronizationError unless game.current_turn == player
+    def handle_move(team:, move:)
+      raise SynchronizationError unless game.current_turn == team
 
       if move == 'ai'
         move = Ai.new(game: game).best_move
@@ -70,7 +71,7 @@ module Connect4
         issue = octokit.issues[1]
         unless issue.user.login != @user || issue.title.end_with?('new') || issue.title.end_with?('ai')
           comment = "Hey, no cheating :eyes:! You just played the most recent move. Ask a friend to make the next move, or alternatively, ask Connect4Bot to [make a move]" \
-          "(https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7C#{player}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)."
+          "(https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7C#{team}%7Cai&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.)."
           octokit.error_notification(reaction: 'confused', comment: comment)
         end
       end
@@ -79,7 +80,7 @@ module Connect4
 
       handle_game_over if game.over?
     rescue SynchronizationError => e
-      comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the **#{player}** team, however it was the **#{game.current_turn}** team's turn to play. This was most likely caused by someone sneaking a move in right before you. Please refresh the page and try again."
+      comment = "Uh oh, there was a synchronization error! You had requested to drop a disk for the **#{team}** team, however it was the **#{game.current_turn}** team's turn to play. This was most likely caused by someone sneaking a move in right before you. Please refresh the page and try again."
       octokit.error_notification(reaction: 'confused', comment: comment, error: e)
     rescue InvalidMoveError => e
       comment = "**#{move}** is an invalid move. Please double check the board and try again."
@@ -125,8 +126,7 @@ module Connect4
       end
     end
 
-    def write
-      *, command, team, move = @issue_title.split('|')
+    def write_game_state(command:, team:, move:)
       handle = if move == 'ai'
         move = @ai_move
         ':robot: Connect4Bot'
@@ -150,24 +150,14 @@ module Connect4
       else
         File.write(METADATA_FILE_PATH, metadata.to_yaml)
         `git add #{GAME_DATA_PATH} #{README_PATH} #{METADATA_FILE_PATH}`
-        `git diff`
         `git config --global user.email "github-action-bot@example.com"`
         `git config --global user.name "GitHub Action Bot"`
-        `git commit -m "#{message}" -a || echo "No changes to commit"`
-        `git push`
-        # octokit.write_to_repo(
-        #   filepath: GAME_DATA_PATH,
-        #   message: message,
-        #   sha: raw_game_data.sha,
-        #   content: game.serialize
-        # )
-        # octokit.write_to_repo(
-        #   filepath: README_PATH,
-        #   message: message,
-        #   sha: raw_markdown_data.sha,
-        #   content: generate_readme,
-        # )
-        octokit.add_reaction(reaction: 'rocket')
+        if system("git commit -m '#{message}'") && system('git push')
+          octokit.add_reaction(reaction: 'rocket')
+        else
+          comment = "Oh no! There was a network issue. This is a transient error. Please try again!"
+          octokit.error_notification(reaction: 'confused', comment: comment)
+        end
       end
     end
 
