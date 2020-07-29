@@ -63,13 +63,12 @@ class MarkdownGenerator
 
     markdown.concat <<~HTML
 
-        **:trophy: Leaderboard: Players with the most game winning moves :1st_place_medal:**
+        **:trophy: Leaderboard: Top 10 players with the most game winning moves :1st_place_medal:**
         | Player | Wins |
         | ------ | -----|
     HTML
 
-    game_winning_players.each do |player, wins|
-      next if player == 'JonathanGin52'
+    game_winning_players.first(10).each do |player, wins|
       user = if player == 'Connect4Bot'
         'Connect4Bot :robot:'
       else

@@ -97,8 +97,11 @@ module Connect4
     end
 
     def handle_game_over
-      metadata[:game_winning_players][@user] += 1 unless game.winner.nil?
       metadata[:completed_games] += 1
+      unless game.winner.nil?
+        winning_player = @ai_move.nil? ? @user : 'Connect4Bot'
+        metadata[:game_winning_players][winning_player] += 1
+      end
 
       red_team = Hash.new(0)
       blue_team = Hash.new(0)
