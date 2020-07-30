@@ -85,7 +85,7 @@ class MarkdownGenerator
     victory_text = if winner.nil?
       'The game ended in a draw, how anticlimactic!'
     else
-      "The **#{game.winner}** team has emerged victorious! :trophy:"
+      "The **#{winner}** team has emerged victorious! :trophy:"
     end
 
     <<~HTML
