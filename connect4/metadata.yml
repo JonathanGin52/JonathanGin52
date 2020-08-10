@@ -222,7 +222,7 @@
   tchalvak: 1
   rnolty: 1
   Cafnio: 1
-  soker90: 8
+  soker90: 9
   miesaf: 1
   muglikar: 1
   penguin2048: 1
@@ -241,7 +241,7 @@
   lengthmin: 1
 :game_winning_players:
   JessicaLim8: 4
-  Connect4Bot: 5
+  Connect4Bot: 6
   will-r-wang: 2
   alrifay: 5
   gumdropsteve: 1
@@ -253,4 +253,4 @@
   ZorgBtw: 1
   Ghost-8D: 1
   mr-winson: 1
-:completed_games: 34
+:completed_games: 35
