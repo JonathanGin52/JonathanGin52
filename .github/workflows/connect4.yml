@@ -17,6 +17,7 @@ jobs:
       run: |
         echo ::set-env name=REPOSITORY::${{ github.repository }}
         echo ::set-env name=EVENT_ISSUE_NUMBER::${{ github.event.issue.number }}
+        echo ::set-env name=EVENT_ISSUE_TITLE::'${{ github.event.issue.title }}'
         echo ::set-env name=EVENT_USER_LOGIN::${{ github.event.issue.user.login }}
 
     - name: Setup Ruby
@@ -36,7 +37,7 @@ jobs:
           Connect4::Runner.new(
             github_token: '${{ secrets.GITHUB_TOKEN }}',
             issue_number: ENV.fetch('EVENT_ISSUE_NUMBER'),
-            issue_title: '${{ github.event.issue.title }}',
+            issue_title: ENV.fetch('EVENT_ISSUE_TITLE'),
             repository: ENV.fetch('REPOSITORY'),
             user: ENV.fetch('EVENT_USER_LOGIN'),
           ).run
