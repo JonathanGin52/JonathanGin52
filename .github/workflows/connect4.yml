@@ -30,6 +30,11 @@ jobs:
         gem install octokit -N --silent
 
     - name: Play
+      env:
+        REPOSITORY: ${{ github.repository }}
+        EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+        EVENT_ISSUE_TITLE: ${{ github.event.issue.title }}
+        EVENT_USER_LOGIN: ${{ github.event.issue.user.login }}
       run: |
         ruby <<- EORUBY
           require './connect4/runner'
