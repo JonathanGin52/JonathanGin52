@@ -5,38 +5,36 @@
 Nice to meet you! My name is Jonathan. I'm currently studying and working as a [Dev Degree](https://devdegree.ca/) intern @Shopify. I previously worked on building the [Shopify Fulfillment Network](https://www.shopify.com/fulfillment) as a fullstack developer. Nowadays, I am working on Shopify's Experimentation Platform as a data developer.
 
 ## :game_die: Join my community Connect Four game!
-![](https://img.shields.io/badge/Moves%20played-3316-blue)
-![](https://img.shields.io/badge/Completed%20games-196-brightgreen)
+![](https://img.shields.io/badge/Moves%20played-3317-blue)
+![](https://img.shields.io/badge/Completed%20games-197-brightgreen)
 ![](https://img.shields.io/badge/Total%20players-711-orange)
 
 Everyone is welcome to participate! To make a move, click on the **column number** you wish to drop your disk in.
 
-It is the **red** team's turn to play.
+Game over, the red team has won! [Click here to start a new game!](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cnew&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)
 
-|[1](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C1&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[2](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C2&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[3](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C3&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[4](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C4&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[5](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C5&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[6](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C6&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|[7](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7C7&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.)|
+|1|2|3|4|5|6|7|
 | - | - | - | - | - | - | - |
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 |![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
-|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
-
-Tired of waiting? [Request a move](https://github.com/JonathanGin52/JonathanGin52/issues/new?title=connect4%7Cdrop%7Cred%7Cai&body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.) from Connect4Bot :robot: 
+|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/red.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blue.png)|![](https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images/blank.png)|
 
 Interested in how everything works? [Click here](https://github.com/JonathanGin52/JonathanGin52/tree/master/connect4) to read up on what's happening behind the scenes.
 
 **:alarm_clock: Most recent moves**
 | Team | Move | Made by |
 | ---- | ---- | ------- |
+| Red | 1 | [@antjacquemin](https://github.com/antjacquemin) |
 | Blue | 6 | [@TomHuynhSG](https://github.com/TomHuynhSG) |
 | Red | 2 | [@marcosbarker](https://github.com/marcosbarker) |
-| Blue | 3 | [@DonaldKLee](https://github.com/DonaldKLee) |
 
 **:trophy: Leaderboard: Top 10 players with the most game winning moves :1st_place_medal:**
 | Player | Wins |
 | ------ | -----|
-| [@antjacquemin](https://github.com/antjacquemin) | 45 |
+| [@antjacquemin](https://github.com/antjacquemin) | 46 |
 | Connect4Bot :robot: | 33 |
 | [@marcosbarker](https://github.com/marcosbarker) | 16 |
 | [@shpatrickguo](https://github.com/shpatrickguo) | 9 |
