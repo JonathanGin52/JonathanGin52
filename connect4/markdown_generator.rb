@@ -1,7 +1,7 @@
 require_relative './game'
 
 class MarkdownGenerator
-  IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/master/images'
+  IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/main/images'
   ISSUE_BASE_URL = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
   ISSUE_BODY = 'body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.'
 
@@ -54,7 +54,7 @@ class MarkdownGenerator
 
     markdown.concat <<~HTML
 
-        Interested in how everything works? [Click here](https://github.com/JonathanGin52/JonathanGin52/tree/master/connect4) to read up on what's happening behind the scenes.
+        Interested in how everything works? [Click here](https://github.com/JonathanGin52/JonathanGin52/tree/main/connect4) to read up on what's happening behind the scenes.
 
         **:alarm_clock: Most recent moves**
         | Team | Move | Made by |

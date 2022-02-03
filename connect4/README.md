@@ -103,4 +103,4 @@ If you notice anything wrong or think of a cool new feature, please [open an iss
 
 ## Acknowledgments
 - This project was originally inspired by Tim Burgan's amazing [community chess tournament](https://github.com/timburgan/timburgan) project.
-- The Connect4 game design was influenced by @denkspuren [bitboard design](https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md) document
+- The Connect4 game design was influenced by @denkspuren [bitboard design](https://github.com/denkspuren/BitboardC4/blob/main/BitboardDesign.md) document
