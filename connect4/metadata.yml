@@ -814,7 +814,7 @@
   rafaelcolladojr: 2
   kodpe: 1
   jimduch: 1
-  code-chaser: 7
+  code-chaser: 8
 :game_winning_players:
   JessicaLim8: 5
   Connect4Bot: 40
@@ -876,4 +876,5 @@
   Ashu-Barnwal: 1
   mishmanners: 1
   SunTzuLombardi: 2
-:completed_games: 253
+  code-chaser: 1
+:completed_games: 254
