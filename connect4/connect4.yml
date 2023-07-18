@@ -1,12 +1,12 @@
 ---
-:player1_board: 2097153
+:player1_board: 2097281
 :player2_board: 268451840
 :peaks:
 - 1
-- 7
+- 8
 - 15
 - 22
 - 29
 - 35
 - 42
-:turn: 4
+:turn: 5
