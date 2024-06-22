@@ -7,6 +7,7 @@ require_relative './malformed_command_error'
 require_relative './invalid_move_error'
 
 require 'yaml'
+require 'base64'
 
 module Connect4
   class Runner
