@@ -3,7 +3,7 @@ require_relative './game'
 class MarkdownGenerator
   IMAGE_BASE_URL = 'https://raw.githubusercontent.com/JonathanGin52/JonathanGin52/main/images'
   ISSUE_BASE_URL = 'https://github.com/JonathanGin52/JonathanGin52/issues/new'
-  ISSUE_BODY = 'body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+30+seconds.'
+  ISSUE_BODY = 'body=Just+push+%27Submit+new+issue%27+without+editing+the+title.+The+README+will+be+updated+after+approximately+2+minutes.'
 
   RED_IMAGE = "![](#{IMAGE_BASE_URL}/red.png)"
   BLUE_IMAGE = "![](#{IMAGE_BASE_URL}/blue.png)"
